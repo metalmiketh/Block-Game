@@ -18,6 +18,25 @@ function Renderer() {
             this.drawStartScreen();
         } else {
             this.drawMap();
+            this.drawRightPanel();
+        }
+    }
+
+    this.drawRightPanel = function () {
+        if (playMode === 1) {
+            push();
+            stroke(255);
+            strokeWeight(4);
+            fill(51);
+            rect(750, 0, 750, 768);
+            noStroke();
+            textSize(20);
+            fill(255);
+            text("Health", 770, 40);
+            text(player.health, 900, 40);
+            text("Lives", 770, 70);
+            text(player.lives, 900, 70);
+            pop();
         }
     }
 
@@ -94,7 +113,7 @@ function Renderer() {
                         textSize(20);
                         textAlign(CENTER, CENTER);
                         text("@", level[c][r][0] + cellWidth / 2, level[c][r][1] + cellWidth / 2);
-                        console.log("Player Drawn");
+                        //console.log("Player Drawn");
                         pop();
                     } else if (level[c][r][2] === 1) { //Wall
                         push();
@@ -128,7 +147,7 @@ function Renderer() {
                         textSize(20);
                         textAlign(CENTER, CENTER);
                         text("@", level[c][r][0] + cellWidth / 2, level[c][r][1] + cellWidth / 2);
-                        console.log("Player Drawn");
+                        //console.log("Player Drawn");
                         pop();
                     } else {
                         push();
