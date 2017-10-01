@@ -26,8 +26,8 @@ function Player(c, r) {
 
         this.checkPosition();
 
-        level[this.cLast][this.rLast][3] = 0;
-        level[this.c][this.r][3] = 1;
+        level[this.cLast][this.rLast][3] = 0; //undraw previous cell
+        level[this.c][this.r][3] = 1;           //draw new cell
 
         //console.log("Player C = ", this.c, "Player R = ", this.r);
     }
