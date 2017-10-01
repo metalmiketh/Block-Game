@@ -6,9 +6,10 @@ let startScreen = 1; //NOTE:is start screen to be triggered at next frame draw
 let playMode = 0; //NOTE:is play mode active
 let levelEditor = 0; //NOTE:is level editor active
 
-let numberOfRows; //NOTE:number of rows on the map
-let numberOfCols; //NOTE:number of collumns on tha map 
+let numberOfRows = 25; //NOTE: number of rows on the map
+let numberOfCols = 25; //NOTE: number of collumns on tha map 
 let level; //NOTE:3d array containg level info (array created below)
+let maxU = 10; //NOTE: sets up size of 3rd array in 3d array //TODO: Change name
 
 let player; //NOTE:player container
 
@@ -28,7 +29,7 @@ function whereMouse() {
 }
 
 function triggerFrameDraw() {
-    console.log("Frame Draw Triggered");
+    //console.log("Frame Draw Triggered");
     renderer.clearScreen();
     renderer.drawToScreen();
 }
@@ -48,7 +49,7 @@ function saveLevel() {
 
 //NOTE:cycles through all possibilities
 function updateLevel(mouseCol, mouseRow) {
-    if (level[mouseCol][mouseRow][2] === 9) { //TODO: Make this line be defined by a variable not 9
+    if (level[mouseCol][mouseRow][2] === 9) {
         level[mouseCol][mouseRow][2] = 0;
     } else {
         level[mouseCol][mouseRow][2] += 1;
@@ -65,7 +66,7 @@ function mousePressed() {
 }
 
 
-//TODO: Tody up keypressed function
+//TODO: Tidy up keypressed function
 //NOTE: Group similar actions
 function keyPressed() {
     if (keyCode === LEFT_ARROW) {
@@ -102,12 +103,13 @@ function keyPressed() {
     }
 }
 
+
 function setupCalc() {
     //NOTE:Not really required if canvas is setup
     //NOTE:Only required once different resolutions are implements
     //cellWidth = width/20;    
-    numberOfRows = floor(height / cellWidth);
-    numberOfCols = floor(width / cellWidth);
+    //numberOfRows = floor(height / cellWidth);
+    //numberOfCols = floor(width / cellWidth);
     console.log("numberOfCols = ", numberOfCols, "numberOfRows = ", numberOfRows);
 }
 
@@ -115,6 +117,10 @@ function setModeLevelEditor() {
     if (startScreen === 1) {
         setupCalc();
         generateMap();
+    }
+    if (playMode === 1) {
+        // clear where play character was
+        level[player.c][player.r][3] = 0;
     }
     startScreen = 0;
     levelEditor = 1;
@@ -169,23 +175,26 @@ function make3dArraylevel(cols, rows, variables) {
 }
 
 function generateMap() {
-    //TODO: Make this line be defined by a variable not 10
-    //      Linked to note above in updateLevel()
-    make3dArraylevel(numberOfCols, numberOfRows, 10);
+
+    make3dArraylevel(numberOfCols, numberOfRows, maxU);
 
 
     for (c = 0; c < numberOfCols; c++) {
         for (r = 0; r < numberOfRows; r++) {
             level[c][r][0] = c * cellWidth; //NOTE: x pos
             level[c][r][1] = r * cellWidth; //NOTE: y pos
-            level[c][r][2] = 0; //NOTE: 0 - Room, 1 - Wall, 2 - Spawn, 3 - Health Pack, 4 - enemy1, 5 - enemy2
-            level[c][r][3] = 0; //NOTE: has player
-            level[c][r][4] = 0; //NOTE: has enemy1
-            level[c][r][5] = 0; //NOTE: has enemy2
-            level[c][r][6] = 0; //NOTE: unused
-            level[c][r][7] = 0; //NOTE: unused
-            level[c][r][8] = 0; //NOTE: unused
-            level[c][r][9] = 0; //NOTE: unused
+            for (u = 2; u < maxU; u++) {
+                level[c][r][u] = 0;
+                //console.log("c = ", c, "r = ", r, "u = ", u);
+            }
+            //level[c][r][2] = 0; //NOTE: 0 - Room, 1 - Wall, 2 - Spawn, 3 - Health Pack, 4 - enemy1, 5 - enemy2
+            //level[c][r][3] = 0; //NOTE: has player
+            //level[c][r][4] = 0; //NOTE: has enemy1
+            //level[c][r][5] = 0; //NOTE: has enemy2
+            //level[c][r][6] = 0; //NOTE: unused
+            //level[c][r][7] = 0; //NOTE: unused
+            //level[c][r][8] = 0; //NOTE: unused
+            //level[c][r][9] = 0; //NOTE: unused
         }
     }
 }

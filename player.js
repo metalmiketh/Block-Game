@@ -2,22 +2,23 @@ function Player(c, r) {
     //NOTE: If -1 is still set, then sets spawn point to 0,0
     if (c === -1) {
         this.c = 0;
-        console.log("No Spawnpoint Provided");
+        //console.log("No Spawnpoint Provided");
     } else {
         this.c = c;
     }
     if (r === -1) {
         this.r = 0;
-        console.log("No Spawnpoint Provided");
+        //console.log("No Spawnpoint Provided");
     } else {
         this.r = r;
     }
     this.lives = 5; //TODO: Implement lives
+    this.health = 100;
 
     level[this.c][this.r][3] = 1; //NOTE: Sets cell as having a player character
 
     this.update = function (c, r) { //NOTE: c and r values between -1 and 1
-        console.log("           ");
+        //console.log("           ");
         this.cLast = this.c;
         this.rLast = this.r;
         this.c += c;
@@ -28,7 +29,7 @@ function Player(c, r) {
         level[this.cLast][this.rLast][3] = 0;
         level[this.c][this.r][3] = 1;
 
-        console.log("Player C = ", this.c, "Player R = ", this.r);
+        //console.log("Player C = ", this.c, "Player R = ", this.r);
     }
 
     this.checkPosition = function () { //NOTE: Fuction for checking players moves are valid
@@ -38,7 +39,7 @@ function Player(c, r) {
 
     this.checkWall = function () {
         if (level[this.c][this.r][2] === 1) {
-            console.log("OOOPS WALL");
+            //console.log("OOOPS WALL");
             this.c = this.cLast;
             this.r = this.rLast;
         }
@@ -47,17 +48,17 @@ function Player(c, r) {
     this.checkMapEdge = function () {
         if (this.c < 0) {
             this.c = 0;
-            console.log("OOOPS < C");
+            //console.log("OOOPS < C");
         } else if (this.c > numberOfCols - 1) {
             this.c = numberOfCols - 1;
-            console.log("OOOPS > C");
+            //console.log("OOOPS > C");
         }
         if (this.r < 0) {
             this.r = 0;
-            console.log("OOOPS < R");
+            //console.log("OOOPS < R");
         } else if (this.r > numberOfRows - 1) {
             this.r = numberOfRows - 1;
-            console.log("OOOPS > R");
+            //console.log("OOOPS > R");
         }
     }
 }
